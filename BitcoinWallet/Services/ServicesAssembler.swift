@@ -11,10 +11,10 @@ enum ServicesAssembler {
         DIContainer.shared.addFactory(type: BitcoinRateRepo.self) {
             BitcoinRateRemoteRepo()
         }
-    }
-    
-    static func test() {
-//         ...
+        
+        DIContainer.shared.addFactory(type: BitcoinRateService.self) {
+            BitcoinRateServiceImpl()
+        }
     }
 //    // MARK: - BitcoinRateService
 //    

@@ -16,7 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         ServicesAssembler.setupDI()
-        ServicesAssembler.test()
         
         return true
     }
