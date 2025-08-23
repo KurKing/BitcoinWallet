@@ -28,27 +28,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UISceneConfiguration(name: "Default Configuration",
                              sessionRole: connectingSceneSession.role)
     }
-
-    func application(_ application: UIApplication,
-                     didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        /* ... */
-    }
-
-    // MARK: - Core Data stack
-
-    lazy var persistentContainer: NSPersistentContainer = {
-        
-        let container = NSPersistentContainer(name: "BitcoinWallet")
-        
-        container.loadPersistentStores(completionHandler: { _, _ in /* ... */ })
-        return container
-    }()
-
-    // MARK: - Core Data Saving support
-
-    func saveContext() {
-        
-        let context = persistentContainer.viewContext
-        if context.hasChanges { try? context.save() }
-    }
 }

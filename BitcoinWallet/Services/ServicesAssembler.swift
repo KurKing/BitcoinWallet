@@ -15,6 +15,13 @@ enum ServicesAssembler {
         DIContainer.shared.addFactory(type: BitcoinRateService.self) {
             BitcoinRateServiceImpl()
         }
+        
+        DIContainer.shared.addSingleton(type: CoreDataContextProvider.self,
+                                        service: DefaultCoreDataContextProvider())
+        
+        DIContainer.shared.addFactory(type: TransactionRepo.self) {
+            TransactionCoreDataRepo()
+        }
     }
 //    // MARK: - BitcoinRateService
 //    
