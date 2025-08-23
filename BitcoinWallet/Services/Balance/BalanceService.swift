@@ -28,10 +28,11 @@ class TransactionBasedBalanceService: BalanceService {
     init() {
         
         Task {
-            await setup()
             
             let initialBalance = await balanceRepo.balance
             await wallet.deposit(initialBalance)
+
+            await setup()
         }
     }
 
@@ -55,9 +56,11 @@ class TransactionBasedBalanceService: BalanceService {
             .store(in: &cancellables)
         
         wallet.balancePublisher
+            .removeDuplicates()
+            .throttle(for: .seconds(1), scheduler: DispatchQueue.global(), latest: true)
             .sink { [weak self] balance in
                 
-                Task { [weak self] in
+                Task.detached { [weak self] in
                     try? await self?.balanceRepo.setBalance(balance)
                 }
             }
