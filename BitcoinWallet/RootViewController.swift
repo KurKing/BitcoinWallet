@@ -33,13 +33,20 @@ class RootViewController: UIViewController {
         ])
         
         btcService.rate
-            .receive(on: RunLoop.main)
             .removeDuplicates()
             .compactMap { $0 }
             .map { String(format: "%.4f", $0) }
-            .map { "💰 \($0)$" }
+            .map { "\($0)$" }
+            .receive(on: RunLoop.main)
             .sink { [weak label] rate in
-                label?.text = rate
+                
+                guard let label else { return }
+                
+                UIView.transition(with: label,
+                                  duration: 0.3,
+                                  options: .transitionCrossDissolve) {
+                    label.text = rate
+                }
             }
             .store(in: &cancellables)
     }
