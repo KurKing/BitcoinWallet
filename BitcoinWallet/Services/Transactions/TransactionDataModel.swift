@@ -32,7 +32,7 @@ extension TransactionDataModel {
                 name: "Taxi ride"
             ),
             TransactionDataModel(
-                amount: 120.99,
+                amount: 120.90,
                 categoryName: "Shopping",
                 date: Date().addingTimeInterval(-2 * 86400),
                 name: "New Sneakers"
