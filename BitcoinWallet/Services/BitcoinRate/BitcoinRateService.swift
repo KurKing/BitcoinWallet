@@ -8,12 +8,13 @@ import Foundation
 import Combine
 
 protocol BitcoinRateService {
-    var rate: CurrentValueSubject<Double?, Never> { get }
+    var rate: AnyPublisher<Double?, Never> { get }
 }
 
 final class BitcoinRateServiceImpl: BitcoinRateService {
     
-    let rate = CurrentValueSubject<Double?, Never>(nil)
+    var rate: AnyPublisher<Double?, Never> { rateSubject.eraseToAnyPublisher() }
+    private let rateSubject = CurrentValueSubject<Double?, Never>(nil)
     
     @Dependency private var rateProvider: BitcoinRateProvider
     
@@ -37,6 +38,6 @@ final class BitcoinRateServiceImpl: BitcoinRateService {
     private func fetchAndPublish() async {
         
         let rate = try? await rateProvider.rate
-        self.rate.send(rate)
+        self.rateSubject.send(rate)
     }
 }

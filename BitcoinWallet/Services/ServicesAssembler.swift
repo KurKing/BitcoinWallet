@@ -19,32 +19,23 @@ enum ServicesAssembler {
         DIContainer.shared.addSingleton(type: CoreDataContextProvider.self,
                                         service: DefaultCoreDataContextProvider())
         
-        DIContainer.shared.addFactory(type: TransactionRepo.self) {
-            TransactionCoreDataRepo()
-        }
+        DIContainer.shared.addSingleton(type: TransactionRepo.self,
+                                        service: TransactionCoreDataRepo())
+        
+        DIContainer.shared.addSingleton(type: BalanceRepo.self,
+                                        service: BalanceCoreDataRepo())
+        
+        DIContainer.shared.addSingleton(type: BalanceService.self,
+                                        service: TransactionBasedBalanceService())
+        
+        // setup dependecies
+        _ = DIContainer.shared.resolve(type: BalanceService.self)
     }
-//    // MARK: - BitcoinRateService
-//    
-//    static let bitcoinRateService: PerformOnce<BitcoinRateService> = {
-//        lazy var analyticsService = Self.analyticsService()
-//        
-//        let service = BitcoinRateServiceImpl()
-//        
-//        service.onRateUpdate = {
-//            analyticsService.trackEvent(
-//                name: "bitcoin_rate_update",
-//                parameters: ["rate": String(format: "%.2f", $0)]
-//            )
-//        }
-//        
-//        return { service }
-//    }()
-//    
+}
 //    // MARK: - AnalyticsService
-//    
+//
 //    static let analyticsService: PerformOnce<AnalyticsService> = {
 //        let service = AnalyticsServiceImpl()
-//        
+//
 //        return { service }
 //    }()
-}
