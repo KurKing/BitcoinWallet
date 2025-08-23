@@ -1,5 +1,5 @@
 //
-//  BitcoinRateRemoteRepo.swift
+//  BitcoinRateRemoteProvider.swift
 //  BitcoinWallet
 //
 //  Created by Oleksii on 22.08.2025.
@@ -7,16 +7,16 @@
 
 import Foundation
 
-enum BitcoinRateRemoteRepoError: Error {
+enum BitcoinRateRemoteProviderError: Error {
     
     case invalidURL
     case badResponse
     case pasingError
 }
 
-class BitcoinRateRemoteRepo: BitcoinRateRepo {
+class BitcoinRateRemoteProvider: BitcoinRateProvider {
     
-    private typealias InternalError = BitcoinRateRemoteRepoError
+    private typealias InternalError = BitcoinRateRemoteProviderError
     
     var rate: Double {
         get async throws {
