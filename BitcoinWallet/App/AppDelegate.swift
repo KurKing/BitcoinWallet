@@ -14,7 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions
                      launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        true
+        
+        ServicesAssembler.setupDI()
+        
+        return true
     }
 
     // MARK: UISceneSession Lifecycle
@@ -37,12 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let container = NSPersistentContainer(name: "BitcoinWallet")
         
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                /* ... */
-            }
-        })
-        
+        container.loadPersistentStores(completionHandler: { _, _ in /* ... */ })
         return container
     }()
 
@@ -51,13 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func saveContext() {
         
         let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
+        if context.hasChanges { try? context.save() }
     }
 }
