@@ -11,14 +11,14 @@ import Combine
 
 final class TransactionCoreDataRepo: TransactionRepo {
     
-    var changes: AnyPublisher<Void, Never> { subject.eraseToAnyPublisher() }
-    private let subject = PassthroughSubject<Void, Never>()
+    var changes: AnyPublisher<TransactionRepoUpdate, Never> { subject.eraseToAnyPublisher() }
+    private let subject = PassthroughSubject<TransactionRepoUpdate, Never>()
 
-    private var coreDataStackInternal: CoreDataStack?
-
+    @Dependency private var contextProvider: CoreDataContextProvider
+    
     func add(_ transaction: TransactionDataModel) async throws {
         
-        let context = await context
+        let context = await contextProvider.backgroundContext
         
         try await context.perform {
             
@@ -34,12 +34,12 @@ final class TransactionCoreDataRepo: TransactionRepo {
             }
         }
         
-        subject.send(())
+        subject.send(.added(transaction))
     }
     
     func get(offset: Int, limit: Int) async throws -> [TransactionDataModel] {
         
-        let context = await context
+        let context = await contextProvider.backgroundContext
         
         return try await context.perform {
             
@@ -60,24 +60,5 @@ final class TransactionCoreDataRepo: TransactionRepo {
                 )
             }
         }
-    }
-    
-    private var coreDataStack: CoreDataStack {
-        
-        get async {
-            
-            if let coreDataStackInternal {
-                return coreDataStackInternal
-            }
-            
-            let stack: CoreDataStack = await .build()
-            coreDataStackInternal = stack
-            
-            return stack
-        }
-    }
-    
-    private var context: NSManagedObjectContext {
-        get async { await coreDataStack.backgroundContext }
     }
 }
