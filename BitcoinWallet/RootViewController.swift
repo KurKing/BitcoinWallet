@@ -10,7 +10,7 @@ import Combine
 
 class RootViewController: UIViewController {
     
-    // Imagin it is from VM and model
+    // Imagine it is from VM and model
     @Dependency private var btcService: BitcoinRateService
     private var cancellables: Set<AnyCancellable> = []
 
