@@ -149,7 +149,7 @@ extension TransactionsViewController: UITableViewDelegate {
             return
         }
         
-        if abs(indexPath.row - numberOfRowsInSection) < 4 {
+        if numberOfRowsInSection - indexPath.row == 1 {
             viewModel.onScrollToTheEnd()
         }
     }
