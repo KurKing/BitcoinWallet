@@ -9,24 +9,21 @@ import UIKit
 import Combine
 
 class RootViewController: UIViewController {
-    
-    private var transactionsVC: TransactionsViewController!
-    private var balanceVC: BalanceViewController!
-    
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         title = "Wallet"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: BTCRateLabel())
         
         view.backgroundColor = UIColor(red: 240/255,
                                        green: 240/255,
                                        blue: 240/255,
                                        alpha: 1)
         
-        balanceVC = BalanceViewController()
-        let balanceView = setup(childViewController: balanceVC)
+        let balanceView = setup(childViewController: BalanceViewController())
         
         NSLayoutConstraint.activate([
             
@@ -36,8 +33,7 @@ class RootViewController: UIViewController {
             balanceView.heightAnchor.constraint(equalToConstant: 60)
         ])
         
-        transactionsVC = TransactionsViewController()
-        let transactionsView = setup(childViewController: transactionsVC)
+        let transactionsView = setup(childViewController: TransactionsViewController())
 
         NSLayoutConstraint.activate([
             
