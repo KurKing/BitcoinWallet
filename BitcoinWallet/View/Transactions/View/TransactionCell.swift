@@ -39,7 +39,7 @@ class TransactionCell: UITableViewCell {
     
     private func setupUI() {
         
-        backgroundColor = .white
+        backgroundColor = .init(white: 0, alpha: 0.05)
         contentView.backgroundColor = .white
         selectionStyle = .none
         
