@@ -8,19 +8,27 @@ enum ServicesAssembler {
     
     static func setupDI() {
         
+        DIContainer.shared.addSingleton(type: AnalyticsService.self,
+                                        service: DefaultAnalyticsService())
+        
         DIContainer.shared.addFactory(type: BitcoinRateProvider.self) {
             BitcoinRateLocalRemotelyProvider()
         }
         
         DIContainer.shared.addFactory(type: BitcoinRateService.self) {
-            BitcoinRateServiceImpl()
+            BitcoinRateAnalyticsDecorator(rateService: BitcoinRateServiceImpl())
         }
         
         DIContainer.shared.addSingleton(type: CoreDataContextProvider.self,
                                         service: DefaultCoreDataContextProvider())
         
-        DIContainer.shared.addSingleton(type: TransactionRepo.self,
-                                        service: TransactionCoreDataRepo())
+        DIContainer.shared
+            .addSingleton(
+                type: TransactionRepo.self,
+                service: TransactionRepoAnalyticsDecorator(
+                    repo: TransactionCoreDataRepo()
+                )
+            )
         
         DIContainer.shared.addSingleton(type: BalanceRepo.self,
                                         service: BalanceCoreDataRepo())
@@ -36,10 +44,3 @@ enum ServicesAssembler {
         }
     }
 }
-//    // MARK: - AnalyticsService
-//
-//    static let analyticsService: PerformOnce<AnalyticsService> = {
-//        let service = AnalyticsServiceImpl()
-//
-//        return { service }
-//    }()

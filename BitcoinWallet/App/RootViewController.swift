@@ -35,6 +35,13 @@ class RootViewController: UIViewController {
         
         let buttonsView = setup(childViewController:
                                     AddTransactionButtonsViewController())
+        balanceView.isUserInteractionEnabled = true
+        
+        #if DEBUG
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                                 action: #selector(debugPrint))
+        balanceView.addGestureRecognizer(tap)
+        #endif
         
         NSLayoutConstraint.activate([
             
@@ -64,4 +71,28 @@ class RootViewController: UIViewController {
         
         return childViewController.view
     }
+    
+#if DEBUG
+    
+    @Dependency private var analyticsService: AnalyticsService
+    
+    @objc private func debugPrint() {
+        
+        Task.detached { [weak self] in
+
+            guard let analyticsService = await self?.analyticsService as? DefaultAnalyticsService else {
+                return
+            }
+            
+            let events = await analyticsService.events.filtered(name: AnalyticsEvent.transactionIntention.rawValue,
+                                                                from: nil,
+                                                                to: nil)
+            print("###### EVENTS ######")
+            
+            for (index, event) in events.enumerated() {
+                print("\(index+1). \(event.name): \(event.parameters)")
+            }
+        }
+    }
+#endif
 }
