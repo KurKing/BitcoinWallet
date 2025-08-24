@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import Combine
 
 class AddTransactionViewController: UIViewController {
     
-    private let viewModel: AddTransactionViewModel
+    private let viewModel: AddTransactionScreenViewModel
     
     private let amountField = UITextField()
     private let nameField = UITextField()
@@ -19,7 +20,9 @@ class AddTransactionViewController: UIViewController {
     private let categories = ["Groceries", "Taxi", "Electronics", "Restaurant", "Other"]
     private var selectedCategory: String?
     
-    init(viewModel: AddTransactionViewModel = DefaultAddTransactionViewModel()) {
+    private var cancellables: Set<AnyCancellable> = []
+    
+    init(viewModel: AddTransactionScreenViewModel = DefaultAddTransactionScreenViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -52,6 +55,9 @@ class AddTransactionViewController: UIViewController {
         amountField.translatesAutoresizingMaskIntoConstraints = false
         amountField.textColor = .black
         amountField.backgroundColor = .white
+        nameField.addTarget(self,
+                            action: #selector(amountTextFieldDidChanged),
+                            for: .editingChanged)
         
         // Name field
         nameField.attributedPlaceholder
@@ -61,6 +67,9 @@ class AddTransactionViewController: UIViewController {
         nameField.translatesAutoresizingMaskIntoConstraints = false
         nameField.textColor = .black
         nameField.backgroundColor = .white
+        nameField.addTarget(self,
+                            action: #selector(nameTextFieldDidChanged),
+                            for: .editingChanged)
         
         // Picker
         categoryPicker.dataSource = self
@@ -83,6 +92,15 @@ class AddTransactionViewController: UIViewController {
         doneButton.translatesAutoresizingMaskIntoConstraints = false
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         
+        viewModel.isAddButtonEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak doneButton] isEnabled in
+                
+                doneButton?.isEnabled = isEnabled
+                doneButton?.alpha = isEnabled ? 1 : 0.6
+            }
+            .store(in: &cancellables)
+        
         // StackView
         let stack = UIStackView(arrangedSubviews: [amountField, nameField, categoryPicker, doneButton])
         stack.axis = .vertical
@@ -103,24 +121,25 @@ class AddTransactionViewController: UIViewController {
     
     @objc private func doneButtonTapped() {
         
-        guard let amount = amountField.text,
-              let category = selectedCategory,
-              let name = nameField.text else { return }
+        guard viewModel.isAddButtonEnabled.value else { return }
         
         Task { [weak self] in
             
-            await self?.viewModel.add(transaction: .init(
-                amount: amount,
-                categoryName: category,
-                date: "",
-                name: name,
-                type: .withdrawal
-            ))
+            await self?.viewModel.add()
             
             self?.dismiss(animated: true)
         }
     }
+    
+    @objc private func amountTextFieldDidChanged() {
+        viewModel.amount.send(amountField.text ?? "")
+    }
+    
+    @objc private func nameTextFieldDidChanged() {
+        viewModel.name.send(nameField.text ?? "")
+    }
 }
+
 // MARK: - UIPickerViewDataSource & Delegate
 extension AddTransactionViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -143,6 +162,6 @@ extension AddTransactionViewController: UIPickerViewDataSource, UIPickerViewDele
     func pickerView(_ pickerView: UIPickerView,
                     didSelectRow row: Int,
                     inComponent component: Int) {
-        selectedCategory = categories[row]
+        viewModel.category.send(categories[row])
     }
 }
