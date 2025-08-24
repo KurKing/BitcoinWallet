@@ -53,11 +53,6 @@
 			path = BitcoinWalletTests;
 			sourceTree = "<group>";
 		};
-		49F905A82E5796EC00B8020D /* BitcoinWalletUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BitcoinWalletUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +85,6 @@
 			children = (
 				49F905842E5796EB00B8020D /* BitcoinWallet */,
 				49F9059E2E5796EC00B8020D /* BitcoinWalletTests */,
-				49F905A82E5796EC00B8020D /* BitcoinWalletUITests */,
 				49F905832E5796EB00B8020D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -165,9 +159,6 @@
 			);
 			dependencies = (
 				49F905A72E5796EC00B8020D /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				49F905A82E5796EC00B8020D /* BitcoinWalletUITests */,
 			);
 			name = BitcoinWalletUITests;
 			packageProductDependencies = (
@@ -289,7 +280,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WG482W7ASB;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BitcoinWallet/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
@@ -321,7 +312,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WG482W7ASB;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BitcoinWallet/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
