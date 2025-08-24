@@ -15,8 +15,9 @@ protocol AddTransactionScreenViewModel: AddTransactionViewModel {
     var amount: CurrentValueSubject<String, Never> { get }
     var name: CurrentValueSubject<String, Never> { get }
     var category: CurrentValueSubject<String, Never> { get }
+    var date: CurrentValueSubject<Date, Never> { get }
     
-    func add() async
+    func addTransaction() async
 }
 
 class DefaultAddTransactionScreenViewModel: DefaultAddTransactionViewModel,
@@ -28,6 +29,7 @@ class DefaultAddTransactionScreenViewModel: DefaultAddTransactionViewModel,
     let amount = CurrentValueSubject<String, Never>("")
     let name = CurrentValueSubject<String, Never>("")
     let category = CurrentValueSubject<String, Never>("")
+    let date = CurrentValueSubject<Date, Never>(Date())
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -38,23 +40,20 @@ class DefaultAddTransactionScreenViewModel: DefaultAddTransactionViewModel,
         setupBindings()
     }
     
-    func add() async {
+    func addTransaction() async {
         
         guard isValid.value else { return }
         
         let amount = amount.value.trimmingCharacters(in: .whitespacesAndNewlines)
         let category = category.value.trimmingCharacters(in: .whitespacesAndNewlines)
         let name = name.value.trimmingCharacters(in: .whitespacesAndNewlines)
+        let date = date.value
         
-        await add(transaction:
-                .init(
-                    amount: amount,
-                    categoryName: category,
-                    date: "",
-                    name: name,
-                    type: .withdrawal
-                )
-        )
+        await addTransaction(with: name,
+                             categoryName: category,
+                             amount: amount,
+                             date: date,
+                             type: .withdrawal)
     }
     
     private func setupBindings() {

@@ -115,7 +115,8 @@ class AddTransactionViewController: UIViewController {
             
             doneButton.heightAnchor.constraint(equalToConstant: 50),
             amountField.heightAnchor.constraint(equalToConstant: 44),
-            nameField.heightAnchor.constraint(equalToConstant: 44)
+            nameField.heightAnchor.constraint(equalToConstant: 44),
+            categoryPicker.heightAnchor.constraint(equalToConstant: 120)
         ])
     }
     
@@ -125,7 +126,7 @@ class AddTransactionViewController: UIViewController {
         
         Task { [weak self] in
             
-            await self?.viewModel.add()
+            await self?.viewModel.addTransaction()
             
             self?.dismiss(animated: true)
         }

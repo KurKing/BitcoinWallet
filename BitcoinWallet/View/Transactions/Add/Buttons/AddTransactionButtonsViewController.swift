@@ -88,12 +88,11 @@ class AddTransactionButtonsViewController: UIViewController {
             
             Task { [weak self] in
                 
-                await self?.viewModel.add(transaction:
-                        .init(amount: deposit,
-                              categoryName: "",
-                              date: "",
-                              name: "Deposit",
-                              type: .deposit))
+                await self?.viewModel.addTransaction(with: "Deposit",
+                                                     categoryName: "",
+                                                     amount:deposit,
+                                                     date: Date(),
+                                                     type: .deposit)
             }
         }
     }

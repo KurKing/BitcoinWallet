@@ -8,7 +8,12 @@
 import Foundation
 
 protocol AddTransactionViewModel {
-    func add(transaction: TransactionsViewItem) async
+    
+    func addTransaction(with name: String,
+                        categoryName: String,
+                        amount: String,
+                        date: Date,
+                        type: TransactionsViewType) async
 }
 
 class DefaultAddTransactionViewModel: AddTransactionViewModel {
@@ -19,15 +24,23 @@ class DefaultAddTransactionViewModel: AddTransactionViewModel {
         self.model = model
     }
     
-    func add(transaction: TransactionsViewItem) async {
+    func addTransaction(with name: String,
+                        categoryName: String,
+                        amount: String,
+                        date: Date,
+                        type: TransactionsViewType) async {
         
-        guard let decimalAmount = Decimal(string: transaction.amount) else {
+        guard var decimalAmount = Decimal(string: amount) else {
             return
         }
         
-        try? await model.addTransaction(with: transaction.name,
-                                        categotyName: transaction.categoryName,
-                                        amount: decimalAmount * -1,
-                                        date: Date())
+        if type == .withdrawal {
+            decimalAmount *= -1
+        }
+        
+        try? await model.addTransaction(with: name,
+                                        categotyName: categoryName,
+                                        amount: decimalAmount,
+                                        date: date)
     }
 }
