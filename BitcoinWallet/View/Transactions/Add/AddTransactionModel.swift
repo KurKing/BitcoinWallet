@@ -23,6 +23,7 @@ class DefaultAddTransactionModel: AddTransactionModel {
                         categotyName: String,
                         amount: Decimal,
                         date: Date) async throws {
+        
         try await repo.add(.init(amount: amount,
                                  categoryName: categotyName,
                                  date: date,

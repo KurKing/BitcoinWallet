@@ -9,6 +9,20 @@ import UIKit
 
 class AddTransactionButtonsViewController: UIViewController {
     
+    private let viewModel: AddTransactionButtonsViewModel
+    private let router = AddTransactionRouter()
+    
+    init(viewModel: AddTransactionButtonsViewModel =
+         DefaultAddTransactionButtonsViewModel()) {
+        
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -65,14 +79,26 @@ class AddTransactionButtonsViewController: UIViewController {
     }
     
     @objc private func didTapMocks() {
-        print("didTapMocks")
+        viewModel.addMocks()
     }
     
     @objc private func didTapDeposit() {
-        print("didTapDeposit")
+        
+        router.requestDepositAmount(context: self) { [weak self] deposit in
+            
+            Task { [weak self] in
+                
+                await self?.viewModel.add(transaction:
+                        .init(amount: deposit,
+                              categoryName: "",
+                              date: "",
+                              name: "Deposit",
+                              type: .deposit))
+            }
+        }
     }
     
     @objc private func didTapWithdraw() {
-        print("didTapWithdraw")
+        router.routeToAddTransaction(context: self)
     }
 }
