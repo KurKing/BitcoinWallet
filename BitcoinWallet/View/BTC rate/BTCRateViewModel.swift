@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+/// @mockable
 protocol BTCRateViewModel {
     var rate: AnyPublisher<String, Never> { get }
 }

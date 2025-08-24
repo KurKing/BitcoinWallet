@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "BAD76783-FC5F-465C-8E5C-097DD4A53D52",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:BitcoinWallet.xcodeproj",
+        "identifier" : "49F9059A2E5796EC00B8020D",
+        "name" : "BitcoinWalletTests"
+      }
+    }
+  ],
+  "version" : 1
+}

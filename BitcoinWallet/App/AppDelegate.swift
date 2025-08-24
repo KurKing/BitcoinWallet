@@ -15,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions
                      launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        ServicesAssembler.setupDI()
+        if NSClassFromString("XCTestCase") == nil {
+            ServicesAssembler.setupDI()
+        }
         
         return true
     }

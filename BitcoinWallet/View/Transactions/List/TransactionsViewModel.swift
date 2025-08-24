@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+/// @mockable
 protocol TransactionsViewModel {
         
     var items: CurrentValueSubject<[TransactionsViewBlock], Never> { get }

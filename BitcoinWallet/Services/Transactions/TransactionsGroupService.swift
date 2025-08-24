@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// @mockable
 protocol TransactionsGroupService {
     func map(models: [TransactionDataModel]) -> [TransactionDaySection]
 }

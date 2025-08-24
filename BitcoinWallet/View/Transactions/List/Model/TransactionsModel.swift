@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+/// @mockable
 protocol TransactionsModel {
     
     var reloadEvent: AnyPublisher<Void, Never> { get }

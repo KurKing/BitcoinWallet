@@ -5,8 +5,8 @@
 //  Created by Oleksii on 24.08.2025.
 //
 
+/// @mockable
 protocol AddTransactionButtonsViewModel: AddTransactionViewModel {
-    
     func addMocks()
 }
 

@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+/// @mockable
 protocol BalanceViewModel {
     var balance: AnyPublisher<Decimal, Never> { get }
 }

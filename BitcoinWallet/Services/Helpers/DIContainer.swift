@@ -37,6 +37,12 @@ final class DIContainer {
         registrations[key] = DIRegistration(serviceType: type, service: service)
     }
     
+    func remove<T>(type: T.Type) {
+        
+        let key = String(describing: type)
+        registrations[key] = nil
+    }
+        
     func resolve<T>(type: T.Type) -> T {
         
         let key = String(describing: type)

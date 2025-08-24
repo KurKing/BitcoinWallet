@@ -7,6 +7,7 @@
 import Foundation
 import Combine
 
+/// @mockable
 protocol BitcoinRateService {
     var rate: AnyPublisher<Double?, Never> { get }
 }

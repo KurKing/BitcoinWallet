@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+/// @mockable
 protocol TransactionRepo {
     
     var changes: AnyPublisher<TransactionRepoUpdate, Never> { get }

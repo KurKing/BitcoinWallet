@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		49AED8A32E5BA25A00764D58 /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 49AED8A22E5BA25A00764D58 /* TestPlan.xctestplan */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		49F9059C2E5796EC00B8020D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		49AED8A22E5BA25A00764D58 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		49F905822E5796EB00B8020D /* BitcoinWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BitcoinWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49F9059B2E5796EC00B8020D /* BitcoinWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BitcoinWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		49F905A52E5796EC00B8020D /* BitcoinWalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BitcoinWalletUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,11 +56,6 @@
 		49F9059E2E5796EC00B8020D /* BitcoinWalletTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BitcoinWalletTests;
-			sourceTree = "<group>";
-		};
-		49F905A82E5796EC00B8020D /* BitcoinWalletUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BitcoinWalletUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -88,9 +88,9 @@
 		49F905792E5796EB00B8020D = {
 			isa = PBXGroup;
 			children = (
+				49AED8A22E5BA25A00764D58 /* TestPlan.xctestplan */,
 				49F905842E5796EB00B8020D /* BitcoinWallet */,
 				49F9059E2E5796EC00B8020D /* BitcoinWalletTests */,
-				49F905A82E5796EC00B8020D /* BitcoinWalletUITests */,
 				49F905832E5796EB00B8020D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -166,9 +166,6 @@
 			dependencies = (
 				49F905A72E5796EC00B8020D /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				49F905A82E5796EC00B8020D /* BitcoinWalletUITests */,
-			);
 			name = BitcoinWalletUITests;
 			packageProductDependencies = (
 			);
@@ -225,6 +222,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49AED8A32E5BA25A00764D58 /* TestPlan.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +287,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WG482W7ASB;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BitcoinWallet/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
@@ -321,7 +319,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WG482W7ASB;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BitcoinWallet/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
@@ -515,6 +513,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kurking.BitcoinWalletUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -532,6 +534,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kurking.BitcoinWalletUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
