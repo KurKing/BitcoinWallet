@@ -15,15 +15,15 @@ class RootViewController: UIViewController {
     @Dependency private var transactionRepo: TransactionRepo
     @Dependency private var balanceService: BalanceService
     private var cancellables: Set<AnyCancellable> = []
-    
     private var index = 0
-    private let mocks = TransactionDataModel.mockTransactions
-    
     private let fetchOffset = 0
     private let fetchLimit = 5
+    private var transactionsVC: TransactionsViewController!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         view.backgroundColor = .white
         
         let btcLabel = UILabel()
@@ -31,6 +31,7 @@ class RootViewController: UIViewController {
         btcLabel.font = .SF.font(size: 36, weight: .bold)
         btcLabel.textColor = .black
         btcLabel.isUserInteractionEnabled = true
+        
         view.addSubview(btcLabel)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapBTCLabel))
@@ -40,6 +41,7 @@ class RootViewController: UIViewController {
         balanceLabel.translatesAutoresizingMaskIntoConstraints = false
         balanceLabel.font = .systemFont(ofSize: 24, weight: .medium)
         balanceLabel.textColor = .darkGray
+        
         view.addSubview(balanceLabel)
         
         let button = UIButton(type: .system)
@@ -47,17 +49,32 @@ class RootViewController: UIViewController {
         button.setTitle("Add mock", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
         button.addTarget(self, action: #selector(didTapAdd), for: .touchUpInside)
+        
         view.addSubview(button)
         
+        transactionsVC = TransactionsViewController()
+        addChild(transactionsVC)
+        transactionsVC.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(transactionsVC.view)
+        transactionsVC.didMove(toParent: self)
+        
         NSLayoutConstraint.activate([
+            
+            btcLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                          constant: 20),
             btcLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            btcLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            
-            balanceLabel.topAnchor.constraint(equalTo: btcLabel.bottomAnchor, constant: 12),
+            balanceLabel.topAnchor.constraint(equalTo: btcLabel.bottomAnchor,
+                                              constant: 12),
             balanceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor,
+                                        constant: 24),
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            button.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor, constant: 24),
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            transactionsVC.view.topAnchor.constraint(equalTo: button.bottomAnchor,
+                                                     constant: 24),
+            transactionsVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            transactionsVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            transactionsVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
         btcService.rate
@@ -93,22 +110,19 @@ class RootViewController: UIViewController {
         var balance: Decimal = 0
         
         for _ in (0...100) {
-            
-            let item = mocks.randomElement()!
-            
+            let item = TransactionDataModel.mock
             balance += item.amount
-            
             Task.detached { [weak self] in
                 try? await self?.transactionRepo.add(item)
-//                print("✅ \(item.name) \(item.amount)")
             }
         }
-        
         print("FINAL BALANCE: \(balance)")
     }
     
     @objc private func didTapBTCLabel() {
+        
         Task {
+            
             do {
                 let list = try await transactionRepo.get(offset: fetchOffset, limit: fetchLimit)
                 print("—— Transactions [offset: \(fetchOffset), limit: \(fetchLimit)] ——")

@@ -30,6 +30,10 @@ enum ServicesAssembler {
         
         // setup dependecies
         _ = DIContainer.shared.resolve(type: BalanceService.self)
+        
+        DIContainer.shared.addFactory(type: TransactionsGroupService.self) {
+            DefaultTransactionsGroupService()
+        }
     }
 }
 //    // MARK: - AnalyticsService
