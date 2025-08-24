@@ -10,7 +10,7 @@ import UIKit
 class AddTransactionRouter {
     
     func routeToAddTransaction(context: UIViewController) {
-        
+        context.present(AddTransactionViewController(), animated: true)
     }
     
     func requestDepositAmount(context: UIViewController,

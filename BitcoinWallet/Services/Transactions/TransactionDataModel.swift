@@ -37,7 +37,7 @@ private extension Date {
         
         let now = Date()
         
-        let dayOffset = Int.random(in: 0...days)
+        let dayOffset = Int.random(in: 1...days)
         let startOfRandomDay = calendar.startOfDay(for: calendar.date(byAdding: .day,
                                                                       value: -dayOffset,
                                                                       to: now)!)

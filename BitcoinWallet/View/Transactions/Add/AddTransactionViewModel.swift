@@ -11,7 +11,7 @@ protocol AddTransactionViewModel {
     func add(transaction: TransactionsViewItem) async
 }
 
-class DefaultAddTransactionViewModel {
+class DefaultAddTransactionViewModel: AddTransactionViewModel {
     
     let model: AddTransactionModel
     
