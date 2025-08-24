@@ -94,10 +94,12 @@ private extension TransactionDataModel {
     
     func toViewItem(with dateFormatter: DateFormatter) -> TransactionsViewItem {
         
-        .init(amount: "\(amount) BTC",
-              categoryName: categoryName,
-              date: dateFormatter.string(from: date),
-              name: name,
-              type: .type(from: amount))
+        let amountPrefix = amount >= 0 ? "+" : ""
+        
+        return .init(amount: amountPrefix + "\(amount) BTC",
+                     categoryName: categoryName,
+                     date: dateFormatter.string(from: date),
+                     name: name,
+                     type: .type(from: amount))
     }
 }

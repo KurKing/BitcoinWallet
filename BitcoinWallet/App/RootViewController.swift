@@ -30,14 +30,25 @@ class RootViewController: UIViewController {
             balanceView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             balanceView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             balanceView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            balanceView.heightAnchor.constraint(equalToConstant: 60)
+            balanceView.heightAnchor.constraint(equalToConstant: 60),
+        ])
+        
+        let buttonsView = setup(childViewController:
+                                    AddTransactionButtonsViewController())
+        
+        NSLayoutConstraint.activate([
+            
+            buttonsView.topAnchor.constraint(equalTo: balanceView.bottomAnchor),
+            buttonsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            buttonsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            buttonsView.heightAnchor.constraint(equalToConstant: 60),
         ])
         
         let transactionsView = setup(childViewController: TransactionsViewController())
 
         NSLayoutConstraint.activate([
             
-            transactionsView.topAnchor.constraint(equalTo: balanceView.bottomAnchor),
+            transactionsView.topAnchor.constraint(equalTo: buttonsView.bottomAnchor),
             transactionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             transactionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             transactionsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
