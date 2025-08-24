@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		49AED8A32E5BA25A00764D58 /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 49AED8A22E5BA25A00764D58 /* TestPlan.xctestplan */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		49F9059C2E5796EC00B8020D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		49AED8A22E5BA25A00764D58 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		49F905822E5796EB00B8020D /* BitcoinWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BitcoinWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49F9059B2E5796EC00B8020D /* BitcoinWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BitcoinWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		49F905A52E5796EC00B8020D /* BitcoinWalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BitcoinWalletUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +88,7 @@
 		49F905792E5796EB00B8020D = {
 			isa = PBXGroup;
 			children = (
+				49AED8A22E5BA25A00764D58 /* TestPlan.xctestplan */,
 				49F905842E5796EB00B8020D /* BitcoinWallet */,
 				49F9059E2E5796EC00B8020D /* BitcoinWalletTests */,
 				49F905832E5796EB00B8020D /* Products */,
@@ -216,6 +222,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49AED8A32E5BA25A00764D58 /* TestPlan.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

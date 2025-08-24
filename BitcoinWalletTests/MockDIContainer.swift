@@ -18,7 +18,5 @@ class MockDIContainer<T> {
         DIContainer.shared.addSingleton(type: type, service: service)
     }
     
-    deinit {
-        DIContainer.shared.remove(type: type)
-    }
+    deinit { /* DIContainer.shared.remove(type: type) */ }
 }

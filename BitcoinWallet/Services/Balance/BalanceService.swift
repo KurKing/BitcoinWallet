@@ -19,7 +19,7 @@ class TransactionBasedBalanceService: BalanceService {
         wallet.balancePublisher.eraseToAnyPublisher()
     }
     
-    private let wallet = Wallet()
+    private let wallet = BalanceServiceWallet()
     
     @Dependency private var balanceRepo: BalanceRepo
     @Dependency private var transactionsRepo: TransactionRepo
@@ -69,7 +69,7 @@ class TransactionBasedBalanceService: BalanceService {
     }
 }
 
-fileprivate actor Wallet {
+actor BalanceServiceWallet {
     
     private var balanceValue: Decimal
     nonisolated private let subject: CurrentValueSubject<Decimal, Never>
