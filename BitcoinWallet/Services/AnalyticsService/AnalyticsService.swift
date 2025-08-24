@@ -6,6 +6,7 @@
 
 import Foundation
 
+/// @mockable
 protocol AnalyticsService {
     func track(event: AnalyticsEvent, parameters: [String: String])
 }

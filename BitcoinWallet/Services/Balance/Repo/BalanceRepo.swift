@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// @mockable
 protocol BalanceRepo {
     
     var balance: BalanceDataModel { get async }

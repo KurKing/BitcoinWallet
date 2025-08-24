@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+/// @mockable
 protocol AddTransactionScreenViewModel: AddTransactionViewModel {
     
     var isAddButtonEnabled: CurrentValueSubject<Bool, Never> { get }

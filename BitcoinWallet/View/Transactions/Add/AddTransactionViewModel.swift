@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// @mockable
 protocol AddTransactionViewModel {
     
     func addTransaction(with name: String,
