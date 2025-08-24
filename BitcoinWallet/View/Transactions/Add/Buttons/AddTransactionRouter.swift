@@ -9,12 +9,23 @@ import UIKit
 
 class AddTransactionRouter {
     
+    @Dependency private var analyticsService: AnalyticsService
+    
     func routeToAddTransaction(context: UIViewController) {
+        
+        analyticsService.track(event: .transactionIntention, parameters: [
+            "source": "add_screen"
+        ])
+        
         context.present(AddTransactionViewController(), animated: true)
     }
     
     func requestDepositAmount(context: UIViewController,
                               with completion: ((String) -> ())?) {
+        
+        analyticsService.track(event: .transactionIntention, parameters: [
+            "source": "deposit_alert"
+        ])
         
         let alert = UIAlertController(title: "Deposit",
                                       message: "Enter amount in BTC",

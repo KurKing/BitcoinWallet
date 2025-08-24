@@ -6,27 +6,18 @@
 
 import Foundation
 
-protocol AnalyticsService: AnyObject {
-    
-    func trackEvent(name: String, parameters: [String: String])
+protocol AnalyticsService {
+    func track(event: AnalyticsEvent, parameters: [String: String])
 }
 
-final class AnalyticsServiceImpl {
+class DefaultAnalyticsService: AnalyticsService {
     
-    private var events: [AnalyticsEvent] = []
+    private var events: [AnalyticsEventData] = []
     
-    // MARK: - Init
-    
-    init() {
+    func track(event: AnalyticsEvent, parameters: [String: String]) {
         
-    }
-}
-
-extension AnalyticsServiceImpl: AnalyticsService {
-    
-    func trackEvent(name: String, parameters: [String: String]) {
-        let event = AnalyticsEvent(
-            name: name,
+        let event = AnalyticsEventData(
+            name: event.rawValue,
             parameters: parameters,
             date: .now
         )
