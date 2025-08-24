@@ -14,6 +14,7 @@ class AddTransactionViewController: UIViewController {
     
     private let amountField = UITextField()
     private let nameField = UITextField()
+    private let datePicker = UIDatePicker()
     private let categoryPicker = UIPickerView()
     private let doneButton = UIButton(type: .system)
     
@@ -39,13 +40,14 @@ class AddTransactionViewController: UIViewController {
                                        blue: 240/255,
                                        alpha: 1)
         
+        configurateKeyboard()
+        
         title = "Add Transaction"
         setupUI()
     }
     
     private func setupUI() {
         
-        // Amount field
         amountField.attributedPlaceholder
         = NSAttributedString(string: "Enter amount (BTC)",
                              attributes: [.foregroundColor: UIColor(white: 0, alpha: 0.5)])
@@ -58,7 +60,6 @@ class AddTransactionViewController: UIViewController {
                             action: #selector(amountTextFieldDidChanged),
                             for: .editingChanged)
         
-        // Name field
         nameField.attributedPlaceholder
         = NSAttributedString(string: "Enter transaction name",
                              attributes: [.foregroundColor: UIColor(white: 0, alpha: 0.5)])
@@ -66,11 +67,21 @@ class AddTransactionViewController: UIViewController {
         nameField.translatesAutoresizingMaskIntoConstraints = false
         nameField.textColor = .black
         nameField.backgroundColor = .white
-        nameField.addTarget(self,
-                            action: #selector(nameTextFieldDidChanged),
-                            for: .editingChanged)
+        nameField.addTarget(self, action: #selector(nameTextFieldDidChanged), for: .editingChanged)
         
-        // Picker
+        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.maximumDate = Date()
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.backgroundColor = .white
+        datePicker.tintColor = .black
+        datePicker.layer.cornerRadius = 8
+        datePicker.clipsToBounds = true
+        datePicker.overrideUserInterfaceStyle = .light
+        datePicker.addTarget(self,
+                             action: #selector(datePickerValueChanged),
+                             for: .valueChanged)
+
         categoryPicker.dataSource = self
         categoryPicker.delegate = self
         categoryPicker.translatesAutoresizingMaskIntoConstraints = false
@@ -101,8 +112,7 @@ class AddTransactionViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        // StackView
-        let stack = UIStackView(arrangedSubviews: [amountField, nameField, categoryPicker, doneButton])
+        let stack = UIStackView(arrangedSubviews: [amountField, nameField, datePicker, categoryPicker, doneButton])
         stack.axis = .vertical
         stack.spacing = 16
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -116,8 +126,20 @@ class AddTransactionViewController: UIViewController {
             doneButton.heightAnchor.constraint(equalToConstant: 50),
             amountField.heightAnchor.constraint(equalToConstant: 44),
             nameField.heightAnchor.constraint(equalToConstant: 44),
-            categoryPicker.heightAnchor.constraint(equalToConstant: 120)
+            datePicker.heightAnchor.constraint(equalToConstant: 160),
+            categoryPicker.heightAnchor.constraint(equalToConstant: 120),
         ])
+    }
+    
+    private func configurateKeyboard() {
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                                 action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     @objc private func doneButtonTapped() {
@@ -138,6 +160,10 @@ class AddTransactionViewController: UIViewController {
     
     @objc private func nameTextFieldDidChanged() {
         viewModel.name.send(nameField.text ?? "")
+    }
+    
+    @objc private func datePickerValueChanged() {
+        viewModel.date.send(datePicker.date)
     }
 }
 
