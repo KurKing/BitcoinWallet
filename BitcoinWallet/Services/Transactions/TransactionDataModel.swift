@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TransactionDataModel {
+struct TransactionDataModel: Equatable {
     
     let amount: Decimal
     let categoryName: String
@@ -18,67 +18,138 @@ struct TransactionDataModel {
 extension TransactionDataModel {
     
     static var mockTransactions: [TransactionDataModel] {
-        [
+        
+        let cal = Calendar.current
+        
+        return [
             TransactionDataModel(
-                amount: 3.50,
+                amount: Decimal(
+                    string: "3.50"
+                )!,
                 categoryName: "Food & Drinks",
-                date: Date().addingTimeInterval(-3600),
+                date: 
+                        .randomInLast(
+                            days: 30,
+                            calendar: cal
+                        ),
                 name: "Coffee at Starbucks"
             ),
             TransactionDataModel(
-                amount: 25.00,
+                amount: Decimal(
+                    string: "25.00"
+                )!,
                 categoryName: "Transport",
-                date: Date().addingTimeInterval(-86400),
+                date: .randomInLast(
+                    days: 30,
+                    calendar: cal
+                ),
                 name: "Taxi ride"
             ),
             TransactionDataModel(
-                amount: 120.90,
+                amount: Decimal(
+                    string: "120.90"
+                )!,
                 categoryName: "Shopping",
-                date: Date().addingTimeInterval(-2 * 86400),
+                date: .randomInLast(
+                    days: 30,
+                    calendar: cal
+                ),
                 name: "New Sneakers"
             ),
             TransactionDataModel(
-                amount: 59.90,
+                amount: Decimal(
+                    string: "59.90"
+                )!,
                 categoryName: "Groceries",
-                date: Date().addingTimeInterval(-3 * 86400),
+                date: .randomInLast(
+                    days: 30,
+                    calendar: cal
+                ),
                 name: "Supermarket"
             ),
             TransactionDataModel(
-                amount: 14.99,
+                amount: Decimal(
+                    string: "14.99"
+                )!,
                 categoryName: "Subscriptions",
-                date: Date().addingTimeInterval(-7 * 86400),
+                date: .randomInLast(
+                    days: 30,
+                    calendar: cal
+                ),
                 name: "Netflix"
             ),
             TransactionDataModel(
-                amount: 200.00,
+                amount: Decimal(
+                    string: "200.00"
+                )!,
                 categoryName: "Bills",
-                date: Date().addingTimeInterval(-10 * 86400),
+                date: .randomInLast(
+                    days: 30,
+                    calendar: cal
+                ),
                 name: "Electricity"
             ),
             TransactionDataModel(
-                amount: 15.75,
+                amount: Decimal(
+                    string: "15.75"
+                )!,
                 categoryName: "Food & Drinks",
-                date: Date().addingTimeInterval(-12 * 86400),
+                date: .randomInLast(
+                    days: 30,
+                    calendar: cal
+                ),
                 name: "Lunch at Cafe"
             ),
             TransactionDataModel(
-                amount: 75.00,
+                amount: Decimal(
+                    string: "75.00"
+                )!,
                 categoryName: "Entertainment",
-                date: Date().addingTimeInterval(-14 * 86400),
+                date: .randomInLast(
+                    days: 30,
+                    calendar: cal
+                ),
                 name: "Concert Ticket"
             ),
             TransactionDataModel(
-                amount: 9.99,
+                amount: Decimal(
+                    string: "9.99"
+                )!,
                 categoryName: "Subscriptions",
-                date: Date().addingTimeInterval(-20 * 86400),
+                date: .randomInLast(
+                    days: 30,
+                    calendar: cal
+                ),
                 name: "Spotify"
             ),
             TransactionDataModel(
-                amount: 350.00,
+                amount: Decimal(
+                    string: "350.00"
+                )!,
                 categoryName: "Travel",
-                date: Date().addingTimeInterval(-30 * 86400),
+                date: .randomInLast(
+                    days: 30,
+                    calendar: cal
+                ),
                 name: "Weekend Trip"
             )
         ]
+    }
+}
+
+extension Date {
+    
+    static func randomInLast(days: Int, calendar: Calendar = .current) -> Date {
+        
+        let now = Date()
+        
+        let dayOffset = Int.random(in: 0...days)
+        let startOfRandomDay = calendar.startOfDay(for: calendar.date(byAdding: .day,
+                                                                      value: -dayOffset,
+                                                                      to: now)!)
+        let secondsInDay = 24 * 60 * 60
+        let randomSecond = Int.random(in: 0..<secondsInDay)
+        
+        return calendar.date(byAdding: .second, value: randomSecond, to: startOfRandomDay)!
     }
 }

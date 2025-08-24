@@ -47,10 +47,15 @@ class TransactionCell: UITableViewCell {
             .forEach({
                 
                 $0.textColor = .black
-                $0.font = .SF.font(size: 14, weight: .regular)
+                $0.font = .SF.font(size: 11, weight: .regular)
                 $0.textAlignment = .center
             })
         nameLabel.font = .SF.font(size: 14, weight: .semibold)
+        nameLabel.clipsToBounds = true
+        nameLabel.adjustsFontSizeToFitWidth = true
+        nameLabel.numberOfLines = 1
+        nameLabel.minimumScaleFactor = 0.5
+        nameLabel.lineBreakMode = .byTruncatingTail
         
         let stack = UIStackView(arrangedSubviews: [nameLabel,
                                                    categoryLabel,

@@ -43,7 +43,7 @@ class RootViewController: UIViewController {
         button.addTarget(self, action: #selector(didTapAdd), for: .touchUpInside)
         view.addSubview(button)
         // Transactions VC
-        transactionsVC = TransactionsViewController(viewModel: MockTransactionsViewModel())
+        transactionsVC = TransactionsViewController()
         addChild(transactionsVC)
         transactionsVC.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(transactionsVC.view)

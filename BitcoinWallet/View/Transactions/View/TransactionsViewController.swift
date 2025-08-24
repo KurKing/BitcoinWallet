@@ -16,7 +16,7 @@ class TransactionsViewController: UIViewController {
     
     private var cancellables: Set<AnyCancellable> = []
     
-    init(viewModel: TransactionsViewModel = MockTransactionsViewModel()) {
+    init(viewModel: TransactionsViewModel = DefaultTransactionsViewModel()) {
         
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -66,6 +66,7 @@ class TransactionsViewController: UIViewController {
     private func bindViewModel() {
         
         viewModel.items
+            .throttle(for: .seconds(1), scheduler: RunLoop.main, latest: true)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.tableView?.reloadData()

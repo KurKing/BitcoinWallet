@@ -8,75 +8,40 @@
 import Foundation
 import Combine
 
-struct TransactionsViewBlock {
-    
-    let transactions: [TransactionsViewItem]
-    let day: String
-}
-
-struct TransactionsViewItem {
-    
-    let amount: String
-    let categoryName: String
-    let date: String
-    let name: String
-    
-    let type: TransactionsViewType
-    
-    enum TransactionsViewType {
-        
-        case deposit
-        case withdrawal
-    }
-}
-
 protocol TransactionsViewModel {
-    
-    var isLoading: AnyPublisher<Bool, Never> { get }
-    
+        
     var items: CurrentValueSubject<[TransactionsViewBlock], Never> { get }
     
     func onScrollToTheEnd()
 }
 
-class MockTransactionsViewModel: TransactionsViewModel {
+class DefaultTransactionsViewModel: TransactionsViewModel {
     
-    var isLoading: AnyPublisher<Bool, Never>
-    var items: CurrentValueSubject<[TransactionsViewBlock], Never>
-    
-    init() {
+    var items: CurrentValueSubject<[TransactionsViewBlock], Never> { model.viewBlocks }
+
+    private let model: TransactionsModel
+    private var cancellables: Set<AnyCancellable> = []
+
+    init(model: TransactionsModel = DefaultTransactionModel()) {
         
-        let mockBlocks: [TransactionsViewBlock] = [
-            TransactionsViewBlock(
-                transactions: [
-                    TransactionsViewItem(amount: "+0.5123123123123123 BTC",
-                                         categoryName: "Groceries",
-                                         date: "10:45",
-                                         name: "Supermarket",
-                                         type: .withdrawal),
-                    TransactionsViewItem(amount: "+1.2123123123123123 BTC",
-                                         categoryName: "Deposit",
-                                         date: "12:10",
-                                         name: "Top-up",
-                                         type: .deposit)
-                ],
-                day: "Today"
-            ),
-            TransactionsViewBlock(
-                transactions: [
-                    TransactionsViewItem(amount: "-0.3123123123123123 BTC",
-                                         categoryName: "Taxi",
-                                         date: "09:20",
-                                         name: "Uber",
-                                         type: .withdrawal)
-                ],
-                day: "Yesterday"
-            )
-        ]
+        self.model = model
         
-        self.items = CurrentValueSubject<[TransactionsViewBlock], Never>(mockBlocks)
-        self.isLoading = Just(false).eraseToAnyPublisher()
+        model.reloadEvent
+            .throttle(for: .seconds(1), scheduler: DispatchQueue.global(), latest: true)
+            .sink { [weak self] _ in
+                self?.loadFirstPage()
+            }
+            .store(in: &cancellables)
+        
+        loadFirstPage()
     }
     
-    func onScrollToTheEnd() { }
+    func onScrollToTheEnd() {  }
+    
+    private func loadFirstPage() {
+        
+        Task {
+            await self.model.fetchTransactions(offset: 0, limit: 100)
+        }
+    }
 }
