@@ -30,19 +30,16 @@ class TransactionsViewController: UIViewController {
         
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         setupTableView()
         bindViewModel()
     }
     
     private func setupTableView() {
         
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         
-        tableView.backgroundColor = .white
-        
-        UILabel.appearance(whenContainedInInstancesOf: [UITableViewHeaderFooterView.self]).textColor = .systemBlue
-
+        tableView.backgroundColor = .clear
         tableView.tintColor = .systemBlue
         tableView.separatorStyle = .singleLine
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -127,11 +124,12 @@ extension TransactionsViewController: UITableViewDelegate {
         let header = UITableViewHeaderFooterView()
         
         var config = header.defaultContentConfiguration()
-        config.text =  section.day
-        config.textProperties.color = .systemBlue
+        config.text = section.day
+        config.textProperties.color = .black
+        config.textProperties.font = .SF.font(size: 18, weight: .semibold)
         
         header.contentConfiguration = config
-        header.contentView.backgroundColor = .white
+        header.contentView.backgroundColor = .clear
         
         return header
     }
