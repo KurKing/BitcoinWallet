@@ -8,9 +8,8 @@ enum ServicesAssembler {
     
     static func setupDI() {
         
-        DIContainer.shared.addFactory(type: AnalyticsService.self) {
-            DefaultAnalyticsService()
-        }
+        DIContainer.shared.addSingleton(type: AnalyticsService.self,
+                                        service: DefaultAnalyticsService())
         
         DIContainer.shared.addFactory(type: BitcoinRateProvider.self) {
             BitcoinRateLocalRemotelyProvider()
