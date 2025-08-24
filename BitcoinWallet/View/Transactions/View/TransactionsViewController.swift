@@ -135,4 +135,22 @@ extension TransactionsViewController: UITableViewDelegate {
         
         return header
     }
+    
+    func tableView(_ tableView: UITableView,
+                   willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
+        
+        let sectionsCount = viewModel.items.value.count
+        
+        guard indexPath.section == sectionsCount - 1,
+              let numberOfRowsInSection = viewModel.items.value[safe: indexPath.section]?
+            .transactions
+            .count else {
+            return
+        }
+        
+        if abs(indexPath.row - numberOfRowsInSection) < 4 {
+            viewModel.onScrollToTheEnd()
+        }
+    }
 }

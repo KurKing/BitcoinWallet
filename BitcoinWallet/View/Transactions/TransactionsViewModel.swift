@@ -21,6 +21,9 @@ class DefaultTransactionsViewModel: TransactionsViewModel {
 
     private let model: TransactionsModel
     private var cancellables: Set<AnyCancellable> = []
+    
+    private var offset = 0
+    private var limit = 20
 
     init(model: TransactionsModel = DefaultTransactionModel()) {
         
@@ -36,12 +39,25 @@ class DefaultTransactionsViewModel: TransactionsViewModel {
         loadFirstPage()
     }
     
-    func onScrollToTheEnd() {  }
+    func onScrollToTheEnd() {
+        loadNextPage()
+    }
     
     private func loadFirstPage() {
+
+        offset = 0
         
         Task {
-            await self.model.fetchTransactions(offset: 0, limit: 100)
+            await self.model.fetchTransactions(offset: offset, limit: limit)
+        }
+    }
+    
+    private func loadNextPage() {
+        
+        offset += limit
+        
+        Task {
+            await self.model.fetchTransactions(offset: offset, limit: limit)
         }
     }
 }
