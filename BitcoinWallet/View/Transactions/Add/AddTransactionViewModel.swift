@@ -27,7 +27,7 @@ class DefaultAddTransactionViewModel: AddTransactionViewModel {
         
         try? await model.addTransaction(with: transaction.name,
                                         categotyName: transaction.categoryName,
-                                        amount: decimalAmount,
+                                        amount: decimalAmount * -1,
                                         date: Date())
     }
 }

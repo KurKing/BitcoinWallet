@@ -18,7 +18,6 @@ class AddTransactionViewController: UIViewController {
     private let doneButton = UIButton(type: .system)
     
     private let categories = ["Groceries", "Taxi", "Electronics", "Restaurant", "Other"]
-    private var selectedCategory: String?
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -80,8 +79,9 @@ class AddTransactionViewController: UIViewController {
         categoryPicker.clipsToBounds = true
         categoryPicker.layer.cornerRadius = 8
         
-        // Default category
-        selectedCategory = categories.first
+        if let category = categories.first {
+            viewModel.category.send(category)
+        }
         
         // Done button
         doneButton.setTitle("Add", for: .normal)
