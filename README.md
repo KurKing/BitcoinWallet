@@ -20,4 +20,4 @@ Built with **UIKit + Combine**, featuring a **custom DI container**, CoreData pe
 - **Combine** (reactive bindings & event streams)  
 - **CoreData** (local persistence)  
 - **Custom DI container** (service assembly & logging)  
-- **Unit Tests** (XCTest) 
+- **Unit Tests** (with mocks generated via [**Mockolo**](https://github.com/uber/mockolo))   
